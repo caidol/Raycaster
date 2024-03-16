@@ -1,7 +1,9 @@
 #include "raycaster.h"
 #include <stdio.h>
+#include <stdbool.h>
 #include <stdlib.h>
 #include <stdint.h>
+#include <math.h>
 
 #define mapWidth        24
 #define screenWidth     1024
@@ -53,10 +55,57 @@ Vector2 getCurrentRayDirection(Player *player, int currentX){
    return (Vector2) {.x = rayDirX, .y = rayDirY};
 }
 
-int main(void){
+/* 
+calculate the change in distance either for a ray as it traverses one along in x-direction
+or one along in y-direction.
+*/
+void calculateDeltaDistances(Vector2 *rayDir){
+    float deltaDistX = (rayDir->x == 0) 
+        ? (rayDir->x = 999999) // set to arbritrarily high number
+        : sqrt(1 + (rayDir->y * rayDir->y / rayDir->x * rayDir->x));
+
+    float deltaDistY = (rayDir->y == 0)
+        ? (rayDir->y = 999999)
+        : sqrt(1 + (rayDir->x * rayDir->x / rayDir->y * rayDir->y));
+
+    return (Vector2) {.x = deltaDistX, .y = deltaDistY};
+}
+
+/* calculate the rays initial intersection with either a horizontal or vertical line */
+void extendRayToFirstHit(Vector2 *deltaDist, Vector2 *mapSquare, Vector2 *rayDir, Player *player){
+    int x = 0;
+
+    // calculate the nearest X and Y distances as a
+    // proportion of the delta X and Y through a square
+
+    float nearestDistX = 0;
+    float nearestDistY = 0;
+
+    if (rayDir->x < 0){ // the ray vector points to left side of screen
+        float stepX = -1;
+        nearestDistX = (player->pos.x - mapSquare->x) * deltaDist->x;
+    }
+    else{
+        float stepX = 1;
+        nearestDistX = (mapSquare->x + 1 - player->pos.x) * deltaDist->x;
+    }
+
+    if (rayDir->y < 0){
+        float stepY = -1;
+        nearestDistY = (player->pos.y - mapSquare->y) * deltaDist->y;
+    }
+    else{
+        float stepY = 1;
+        nearestDistY = (mapSquare->y + 1 - player->pos.y) * deltaDist->y;
+    }
+
+    return (Vector2) {.x = nearestDistX, .y = nearestDistY};
+}
+
+int main(int argc, char *argv[]){
     // initialise SDL2
     if (SDL_Init(SDL_INIT_EVERYTHING) != 0){
-        fprintf("Failed to initialise SDL2: %s\n", SDL_GetError());
+        printf("Failed to initialise SDL2: %s\n", SDL_GetError());
         exit(1);
     }
 
@@ -72,7 +121,7 @@ int main(void){
     );
 
     if (gameState->window == NULL){
-        fprintf("Failed to create SDL2 window: %s\n", SDL_GetError());
+        printf("Failed to create SDL2 window: %s\n", SDL_GetError());
         exit(1);
     }
 
@@ -83,7 +132,7 @@ int main(void){
     );
 
     if (gameState->renderer == NULL){
-        fprintf("Failed to create SDL2 renderer: %s\n", SDL_GetError());
+        printf("Failed to create SDL2 renderer: %s\n", SDL_GetError());
         exit(1);
     }
 

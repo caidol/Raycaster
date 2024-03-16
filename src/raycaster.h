@@ -1,4 +1,5 @@
-#include "sdl2\i686-w64-mingw32\include\SDL2\SDL.h"
+#include "..\..\sdl2\i686-w64-mingw32\include\SDL2\SDL.h"
+#undef main
 
 typedef struct{
     float x; float y;
