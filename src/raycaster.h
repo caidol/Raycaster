@@ -1,10 +1,10 @@
-#include "..\..\sdl2\i686-w64-mingw32\include\SDL2\SDL.h"
-#include "..\..\sdl2\i686-w64-mingw32\include\SDL2\SDL_events.h"
-#include "..\..\sdl2\i686-w64-mingw32\include\SDL2\SDL_hints.h"
-#include "..\..\sdl2\i686-w64-mingw32\include\SDL2\SDL_render.h"
-#include "..\..\sdl2\i686-w64-mingw32\include\SDL2\SDL_mouse.h"
-#include "..\..\sdl2\i686-w64-mingw32\include\SDL2\SDL_keyboard.h"
-#include "..\..\sdl2\i686-w64-mingw32\include\SDL2\SDL_scancode.h"
+#include "..\sdl2\i686-w64-mingw32\include\SDL2\SDL.h"
+#include "..\sdl2\i686-w64-mingw32\include\SDL2\SDL_events.h"
+#include "..\sdl2\i686-w64-mingw32\include\SDL2\SDL_hints.h"
+#include "..\sdl2\i686-w64-mingw32\include\SDL2\SDL_render.h"
+#include "..\sdl2\i686-w64-mingw32\include\SDL2\SDL_mouse.h"
+#include "..\sdl2\i686-w64-mingw32\include\SDL2\SDL_keyboard.h"
+#include "..\sdl2\i686-w64-mingw32\include\SDL2\SDL_scancode.h"
 #undef main
 
 typedef struct{
