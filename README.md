@@ -15,6 +15,6 @@ A simple program that demonstrates raycasting, which is a 2D graphics technique 
 
 **Mouse - Move to rotate**
 
-## Releases:
+## To run program:
 
 See ![Releases](https://github.com/caidol/Raycaster/releases/tag/v1.0)
